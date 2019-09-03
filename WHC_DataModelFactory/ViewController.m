@@ -36,13 +36,13 @@
 
 
 #define kWHC_DEFAULT_CLASS_NAME @("WHC")
-#define kWHC_CLASS       @("\n@interface %@ :NSObject\n%@\n@end\n")
-#define kWHC_CodingCLASS       @("\n@interface %@ :NSObject <NSCoding>\n%@\n@end\n")
-#define kWHC_CopyingCLASS       @("\n@interface %@ :NSObject <NSCopying>\n%@\n@end\n")
-#define kWHC_CodingAndCopyingCLASS       @("\n@interface %@ :NSObject <NSCoding,NSCopying>\n%@\n@end\n")
+#define kWHC_CLASS       @("\n@interface %@ : NSObject\n\n%@@end\n")
+#define kWHC_CodingCLASS       @("\n@interface %@ : NSObject <NSCoding>\n\n%@@end\n")
+#define kWHC_CopyingCLASS       @("\n@interface %@ : NSObject <NSCopying>\n\n%@@end\n")
+#define kWHC_CodingAndCopyingCLASS       @("\n@interface %@ : NSObject <NSCoding,NSCopying>\n\n%@@end\n")
 
-#define kWHC_PROPERTY(s)    ((s) == 'c' ? @("@property (nonatomic , copy) %@              * %@;\n") : @("@property (nonatomic , strong) %@              * %@;\n"))
-#define kWHC_ASSIGN_PROPERTY    @("@property (nonatomic , assign) %@              %@;\n")
+#define kWHC_PROPERTY(s)    ((s) == 'c' ? @("@property (nonatomic, copy) %@ *%@;\n\n") : @("@property (nonatomic, strong) %@ *%@;\n\n"))
+#define kWHC_ASSIGN_PROPERTY    @("@property (nonatomic, assign) %@ %@;\n\n")
 #define kWHC_CLASS_M     @("@implementation %@\n\n@end\n")
 #define kWHC_CodingCLASS_M     @("@implementation %@\n- (id)initWithCoder:(NSCoder *)decoder {\n       if (self = [super init]) { \n              [self whc_Decode:decoder]; \n       }\n       return self;\n  \n} \n- (void)encodeWithCoder:(NSCoder *)encoder {\n       [self whc_Encode:encoder]; \n} \n\n\n@end\n\n")
 
@@ -61,7 +61,7 @@
 
 #define kSexyJson_FuncMap (@"\n       public func sexyMap(_ map: [String : Any]) {\n       %@       \n       }\n")
 #define kSexyJson_Struct_FuncMap (@"\n       public mutating func sexyMap(_ map: [String : Any]) {\n       %@       \n       }\n")
-#define kSexyJson_Map (@"\n              %@        <<<        map[\"%@\"]")
+#define kSexyJson_Map (@"\n %@        <<<        map[\"%@\"]")
 
 #define kSexyJson_CodingCLASS @("\nclass %@ :NSObject, SexyJson, NSCoding {\n \n       required init(coder decoder: NSCoder) {\n              super.init()\n              self.sexy_decode(decoder)\n       }\n\n       func encode(with aCoder: NSCoder) {\n              self.sexy_encode(aCoder)\n       }\n\n       required override init() {}  \n\n%@\n}\n")
 
@@ -93,24 +93,24 @@ typedef enum : NSUInteger {
 @interface ViewController (){
     NSMutableString       *   _classString;        //存类头文件内容
     NSMutableString       *   _classMString;       //存类源文件内容
-    NSString              *   _classPrefixName;    //类前缀
+    NSString *  _classPrefixName;    //类前缀
     BOOL                      _didMake;
     BOOL                      _firstLower;         //首字母小写
 }
 @property (weak) IBOutlet NSLayoutConstraint *classMHeightConstraint;
 
-@property (nonatomic , strong)IBOutlet  NSTextField  * classNameField;
-@property (nonatomic , strong)IBOutlet  NSTextView  * jsonField;
-@property (nonatomic , strong)IBOutlet  NSTextView  * classField;
-@property (nonatomic , strong)IBOutlet  NSTextView  * classMField;
-@property (nonatomic , strong)IBOutlet  NSComboBox       * comboBox;
-@property (nonatomic , strong)IBOutlet  NSButton       * codingCheckBox;
-@property (nonatomic , strong)IBOutlet  NSButton       * copyingCheckBox;
-@property (nonatomic , strong)IBOutlet  NSButton       * checkUpdateButton;
+@property (nonatomic, strong)IBOutlet  NSTextField  * classNameField;
+@property (nonatomic, strong)IBOutlet  NSTextView  * jsonField;
+@property (nonatomic, strong)IBOutlet  NSTextView  * classField;
+@property (nonatomic, strong)IBOutlet  NSTextView  * classMField;
+@property (nonatomic, strong)IBOutlet  NSComboBox       * comboBox;
+@property (nonatomic, strong)IBOutlet  NSButton       * codingCheckBox;
+@property (nonatomic, strong)IBOutlet  NSButton       * copyingCheckBox;
+@property (nonatomic, strong)IBOutlet  NSButton       * checkUpdateButton;
 
-@property (nonatomic , strong) NSArray * comboxTitles;
-@property (nonatomic , assign) BOOL isSwift;
-@property (nonatomic , assign) WHCModelType index;
+@property (nonatomic, strong) NSArray * comboxTitles;
+@property (nonatomic, assign) BOOL isSwift;
+@property (nonatomic, assign) WHCModelType index;
 @end
 
 @implementation ViewController
